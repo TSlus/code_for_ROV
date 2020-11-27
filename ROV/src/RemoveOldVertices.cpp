@@ -20,7 +20,7 @@ void RemoveOldVertices::removeFunc(MeshEx* _mesh)
 	// 11.26Íí
 
 	std::vector<MeshEx::Vertex*> retainedVertices; // vertices which could not be removed
-	for (size_t i = 0; i < oldVertices.size(); ++i)
+	for (size_t i = 0; i < 2; ++i)
 	{
 		bool removed = mesh_ROV->removeVertexAndReTriangulateNeighbourhood(oldVertices[i]);
 

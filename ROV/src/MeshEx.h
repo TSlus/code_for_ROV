@@ -140,7 +140,9 @@ public:
 	Triangle     *createTriangle( const size_t &index0, const size_t &index1, const size_t &index2 ); ///< creates a Triangle and adds it to the element list with the given node indices
 	Triangle                                   *createTriangle( Vertex *v0, Vertex *v1, Vertex *v2 ); ///< creates a Triangle and adds it to the triangle list from given vertices
 	Triangle     *createTriangle( Vertex *v0, Vertex *v1, Vertex *v2, Edge *e0, Edge *e1, Edge *e2 ); ///< creates a Triangle and adds it to the triangle list from given edges
-	Triangle       *createTriangle( Vertex *v0, Vertex *v1, Vertex *v2, std::vector<Edge *> &edges ); ///< creates a Triangle and adds it to the triangle list -> edges are looked up within the given edges (for speedup)
+	//Triangle       *createTriangle( Vertex *v0, Vertex *v1, Vertex *v2, std::vector<Edge *> &edges ); ///< creates a Triangle and adds it to the triangle list -> edges are looked up within the given edges (for speedup)
+	Triangle* createTriangle(Vertex* v0, Vertex* v1, Vertex* v2, std::vector<Edge*> edges);
+
 	Edge                                                       *createEdge( Vertex *v1, Vertex *v2 ); ///< creates a new edge from 2 given m_vertices
 	Edge                                                         *findEdge( Vertex *n1, Vertex *n2 ); ///< looks for an edge between the given nodes - returns 0 if it could not be found
 	Vertex *                               splitEdge( Edge *edge, const math::Vec3f &splitPosition ); ///< splits the given edge into 2 and returns the splitnode which was created to seperate the edge

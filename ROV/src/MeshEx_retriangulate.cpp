@@ -236,11 +236,12 @@ bool MeshEx::removeVertexAndReTriangulateNeighbourhood( MeshEx::Vertex *v )// ‰»
 	{
 		Triangle *t = (*it);
 
-		Edge *boundaryEdge = t->getOtherEdge( v );
-			
+		MeshEx::Edge *boundaryEdge = t->getOtherEdge( v );
+
 		//∂‘”⁄v2...vnœ»¥Êincome edge£¨∂‘”⁄v1œ»¥Êoutcome edge£ø
 		boundaryRing[boundaryEdge->v1].registerEdge( boundaryEdge );//√ø∏ˆ¡⁄”Úµ„£¨º«¬º‘⁄±ﬂΩÁ±ﬂµƒ»Î±ﬂ∫Õ≥ˆ±ﬂ£¨∂‘”⁄µ⁄“ª∏ˆµ„œ‡∑¥
 		boundaryRing[boundaryEdge->v2].registerEdge( boundaryEdge );
+
 		
 		boundaryEdges.push_back( boundaryEdge );
 	}
@@ -296,6 +297,7 @@ bool MeshEx::removeVertexAndReTriangulateNeighbourhood( MeshEx::Vertex *v )// ‰»
 						if( std::find( boundaryEdges.begin(), boundaryEdges.end(), rv_tri->e[i] ) == boundaryEdges.end() )
 							// store the edge if the node on the other side references another vertex of the vertex-ring
 							if( boundaryRing.find( rv_tri->e[i]->getOtherVertex(rv) ) != boundaryRing.end() )
+
 								criticalEdges.push_back( rv_tri->e[i] );
 
 			}
@@ -539,7 +541,7 @@ bool MeshEx::removeVertexAndReTriangulateNeighbourhood( MeshEx::Vertex *v )// ‰»
 	// and we have to handle the polygon
 	if( boundaryPolygon->isTriangle() )
 	{
-		createTriangle( boundaryPolygon->vertices[0], boundaryPolygon->vertices[1], boundaryPolygon->vertices[2], edges );
+		createTriangle(boundaryPolygon->vertices[0], boundaryPolygon->vertices[1], boundaryPolygon->vertices[2], edges);
 		polygons.clear();
 		delete boundaryPolygon;
 
@@ -549,7 +551,7 @@ bool MeshEx::removeVertexAndReTriangulateNeighbourhood( MeshEx::Vertex *v )// ‰»
 	}
 
 
-	for( std::vector<DistanceHelper>::iterator it=sqDistances.begin(); it != sqDistances.end(); ++it )
+	for( std::vector<DistanceHelper>::iterator it = sqDistances.begin(); it != sqDistances.end(); ++it )
 	{
 		DistanceHelper *h = &(*it);
 
@@ -886,8 +888,10 @@ void MeshEx::retriangulateHole( std::vector<MeshEx::Edge *> &boundaryEdges, std:
 //
 //
 //
+/*
 void MeshEx::detectAndFillHoles()
 {
+	std::cout << "∫Ø ˝MeshEx::detectAndFillHolesæ”»ª±ª÷¥––°£" << std::endl;
 	int count = 0;
 	bool done;
 	do
@@ -970,3 +974,4 @@ void MeshEx::detectAndFillHoles()
 		}
 	}while( (++count < 10)&&(!done) );
 }
+*/
