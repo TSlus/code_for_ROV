@@ -134,7 +134,8 @@ void RetileSurface::generateVertices( size_t number )
 
 		// make sure that the created point lies within the polygon and not outside or on the boundary
 		math::Vec3f                     planeNormal; // normal of the plane on which we move the vertex
-		math::Vec3f                           base1; // base vectors which build the 2d coordinate system within |R?		math::Vec3f                           base2;
+		math::Vec3f                           base1; // base vectors which build the 2d coordinate system within |R?		
+		math::Vec3f                           base2;
 		float                         planeDistance; // distance of the plane on which we move the vertex to the origin
 
 		planeNormal = selected->normal;
@@ -193,7 +194,8 @@ void RetileSurface::moveVertexOnMesh( Vertex *vertex, const math::Vec3f &directi
 
 		math::Vec3f      planeNormal; // normal of the plane on which we move the vertex
 		math::Vec3f       planePoint; // a point on the plane
-		math::Vec3f            base1; // base vectors which build the 2d coordinate system within |R?		math::Vec3f            base2;
+		math::Vec3f            base1; // base vectors which build the 2d coordinate system within |R?		
+		math::Vec3f            base2;
 		float          planeDistance; // distance of the plane on which we move the vertex to the origin
 
 		planeNormal = vertex->t->normal;

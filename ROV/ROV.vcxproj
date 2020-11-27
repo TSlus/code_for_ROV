@@ -148,7 +148,11 @@
     <ClCompile Include="src\math\PerlinNoise.cpp" />
     <ClCompile Include="src\Mesh.cpp" />
     <ClCompile Include="src\MeshEx.cpp" />
+    <ClCompile Include="src\MeshEx_intersections.cpp" />
+    <ClCompile Include="src\MeshEx_retriangulate.cpp" />
     <ClCompile Include="src\ObjIO.cpp" />
+    <ClCompile Include="src\RemoveOldVertices.cpp" />
+    <ClCompile Include="src\ROV_helperFunc.cpp" />
     <ClCompile Include="src\StringManip.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -175,6 +179,7 @@
     <ClInclude Include="src\Mesh.h" />
     <ClInclude Include="src\MeshEx.h" />
     <ClInclude Include="src\ObjIO.h" />
+    <ClInclude Include="src\RemoveOldVertices.h" />
     <ClInclude Include="src\StringManip.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

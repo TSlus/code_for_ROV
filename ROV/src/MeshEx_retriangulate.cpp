@@ -1,9 +1,3 @@
-// Copyright (c) David Koerner - https://github.com/dkoerner/retiler - see README.md for details
-/*---------------------------------------------------------------------
-
-
-
-----------------------------------------------------------------------*/
 #include "MeshEx.h"
 #include <list>
 
@@ -224,35 +218,36 @@ struct EdgeInfoHelper
 	math::Vec2f     projected; // 2d coordinates within the plane onto which the vertex has been projected
 };
 
-//
+///!!! my test is there also. 
+/// 
 // removes the given vertex and retriangulates the hole which would be made
 //
 // The method returns true if the vertex has been removed and false if the vertex has been retained.
 //
-bool MeshEx::removeVertexAndReTriangulateNeighbourhood( Vertex *v )
+
+bool MeshEx::removeVertexAndReTriangulateNeighbourhood( MeshEx::Vertex *v )//输入参数，是 m_vertices;
 {
 	std::vector<MeshEx::Edge *>                                          boundaryEdges; // boundary edges which form the polygon which has to be triangulated
 	std::vector<MeshEx::Edge *>                                          criticalEdges; // edges which are not only connected to other vertices of the vertexring through boundary edges
 	std::map<MeshEx::Vertex *, EdgeInfoHelper>                            boundaryRing; // maps incomming and outgoing edge to each vertex of the boundary vertex-ring
-
-
-
+	
 	// gather and prepare information ------------------------------------------------
 	for( std::vector<Triangle *>::iterator it = v->triangleRing.begin(); it != v->triangleRing.end(); ++it )
 	{
 		Triangle *t = (*it);
 
 		Edge *boundaryEdge = t->getOtherEdge( v );
-
-		boundaryRing[boundaryEdge->v1].registerEdge( boundaryEdge );
+			
+		//对于v2...vn先存income edge，对于v1先存outcome edge？
+		boundaryRing[boundaryEdge->v1].registerEdge( boundaryEdge );//每个邻域点，记录在边界边的入边和出边，对于第一个点相反
 		boundaryRing[boundaryEdge->v2].registerEdge( boundaryEdge );
-
+		
 		boundaryEdges.push_back( boundaryEdge );
 	}
 
 
 	// align the edges so that for each vertex e1 is the incomming and e2 is the outgoing edge
-	Vertex *first = boundaryRing.begin()->first;
+	Vertex *first = boundaryRing.begin()->first;//访问邻域点，就是 map 中元素的 ->first, bingo :-)
 	Vertex *current = first;
 	Vertex *next = 0;
 	Vertex *prev = 0;
@@ -271,8 +266,9 @@ bool MeshEx::removeVertexAndReTriangulateNeighbourhood( Vertex *v )
 
 		next = boundaryRing[current].next;
 
+		//对第一个点进行调整，bingo
 		if( boundaryRing[next].e1 != boundaryRing[current].e2 )
-			boundaryRing[next].swap();
+			boundaryRing[next].swap();//调用EdgeInfoHelper内部函数进行操作，流畅的操作
 
 		current = next;
 	}while( current != first );
@@ -285,10 +281,11 @@ bool MeshEx::removeVertexAndReTriangulateNeighbourhood( Vertex *v )
 		Vertex *rv       = it->first; // current vertex of the vertex ring
 
 		// for each triangle referencing rv...
+
 		for( std::vector<Triangle *>::iterator tit = rv->triangleRing.begin(); tit != rv->triangleRing.end(); ++tit )
 		{
 			Triangle *rv_tri = *tit;
-
+		
 			// ... which doesnt belong to the triangleRing of v
 			if( std::find( v->triangleRing.begin(), v->triangleRing.end(), rv_tri ) == v->triangleRing.end() )
 			{
@@ -425,7 +422,7 @@ bool MeshEx::removeVertexAndReTriangulateNeighbourhood( Vertex *v )
 					current = boundaryRing[current].next;
 
 				}while( current != criticalEdge->v2 );
-				leftPoly.push_back( current, boundaryRing[current].projected );
+				leftPoly.push_back( current, boundaryRing[current].projected );//hehe
 
 
 				// setup right polygon
@@ -473,7 +470,7 @@ bool MeshEx::removeVertexAndReTriangulateNeighbourhood( Vertex *v )
 	// execute the result ------------------------------------------------------------
 
 	// remove vertex v and the triangle ring around v
-	removeVertex( v );
+	removeVertexEx( v );//由于 Mesh 和 MeshEx中都有removeVertex，我们将MeshEx中改为removeVertexEx
 
 
 	// compute squared distances
@@ -710,6 +707,7 @@ void findOutsideSegment( Triangulation &t, Face_handle fh, int currentSegment, i
 // Retriangulates a hole within the mesh. The hole is specified through an edgeloop(closed sequence of edges).
 // In addition an optional number of points can be specified which will be included in the triangulation.
 //
+
 void MeshEx::retriangulateHole( std::vector<MeshEx::Edge *> &boundaryEdges, std::map<MeshEx::Vertex *, math::Vec2f> &boundaryVertexProjections, std::vector<std::pair<math::Vec3f, math::Vec2f> > &interiorPoints )
 {
 	std::map<Vertex_handle, MeshEx::Vertex*>                                 vertexMap; // used to map cgal vertex_handles to vertices
@@ -965,7 +963,7 @@ void MeshEx::detectAndFillHoles()
 				}
 
 				printf( "filling detected hole\n" );
-				retriangulateHole( boundaryEdges, boundaryVertexProjections );
+				retriangulateHole( boundaryEdges, boundaryVertexProjections);//参数调用太少？？
 				done = false;
 				break;
 			}

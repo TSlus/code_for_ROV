@@ -77,7 +77,3 @@ private:
 	float                                                                                           m_damp; // damping factor of the repulsion forces
 	size_t                                                                                m_iterationCount; // number of iterations for moving the vertices into their place
 };
-
-
-
-

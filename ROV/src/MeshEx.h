@@ -1,4 +1,3 @@
-// Copyright (c) David Koerner - https://github.com/dkoerner/retiler - see README.md for details
 #pragma once
 #include <map>
 #include <vector>
@@ -137,7 +136,7 @@ public:
 
 
 	Vertex                                              *createVertex( const math::Vec3f &position ); ///< creates a Vertex and adds it to the node list with the given world position
-	void                                                              removeVertex( Vertex *vertex ); ///< removes given node from the node list
+	void                                                              removeVertexEx( Vertex *vertex ); ///< removes given node from the node list
 	Triangle     *createTriangle( const size_t &index0, const size_t &index1, const size_t &index2 ); ///< creates a Triangle and adds it to the element list with the given node indices
 	Triangle                                   *createTriangle( Vertex *v0, Vertex *v1, Vertex *v2 ); ///< creates a Triangle and adds it to the triangle list from given vertices
 	Triangle     *createTriangle( Vertex *v0, Vertex *v1, Vertex *v2, Edge *e0, Edge *e1, Edge *e2 ); ///< creates a Triangle and adds it to the triangle list from given edges
@@ -154,7 +153,7 @@ public:
 
 	bool findClosestIntersection( const math::Vec3f &position, const math::Vec3f &p1, const math::Vec3f &p2, math::Vec3f &intersection, math::Vec3f &normal, Triangle *&t );
 
-	void retriangulateHole( std::vector<MeshEx::Edge *> &boundaryEdges, std::map<MeshEx::Vertex *, math::Vec2f> &boundaryVertexProjections, std::vector<std::pair<math::Vec3f, math::Vec2f> > &interiorPoints, std::vector<std::pair<math::Vec3f, math::Vec2f> >() );
+	void retriangulateHole( std::vector<MeshEx::Edge *> &boundaryEdges, std::map<MeshEx::Vertex *, math::Vec2f> &boundaryVertexProjections, std::vector<std::pair<math::Vec3f, math::Vec2f> > &interiorPoints/*, std::vector<std::pair<math::Vec3f, math::Vec2f> >() */);
 	void                                                                        detectAndFillHoles();
 
 	void                                                                                     clear();
@@ -232,20 +231,6 @@ public:
 			math::Vec3f cp = math::crossProduct( m_vec1, vec );
 			float dp = math::dotProduct( m_vec1, vec );
 
-			// if the crossproduct is zero, then m_vec1 and vec are colinear
-			// which means the angle between those 2 vectors is either 0.0f or 180.0f
-			// we can use the projection of the crossproduct onto the normal to decide
-			// since the crossproduct is zero
-			// but we know the 2 vecs are colinear, so we take the dotproduct between those 2
-			// vectors to see whether they point in the same direction or not
-			/*
-			if( cp.getSquaredLength() < 0.000001f )
-				if( dp < 0.0f )
-					return MATH_PIf;
-				else
-					return 0.0f;
-			*/
-
 			// clamp the dotproduct to [-1,1] -> acos will be not happy otherwise
 			if( dp < -1.0f )
 				dp = -1.0f;
@@ -306,7 +291,3 @@ public:
 
 		size_t             triangleCount; // temp for debugging
 	};
-	
-	
-	
-	

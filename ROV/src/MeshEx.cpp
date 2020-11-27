@@ -1,4 +1,3 @@
-// Copyright (c) David Koerner - https://github.com/dkoerner/retiler - see README.md for details
 #include "MeshEx.h"
 #include <algorithm>
 
@@ -147,7 +146,7 @@ MeshEx::MeshEx( Mesh *mesh )
 		if( v->triangleRing.size() < 3 )
 		{
 			printf( "error degenerated vertex detected\n" );
-			removeVertex( v );
+			removeVertexEx( v );
 		}
 	}
 
@@ -381,27 +380,28 @@ MeshEx::Vertex *MeshEx::createVertex( const math::Vec3f &position )
 {
 	Vertex *n = new Vertex();
 	n->position = position;
-	m_vertices.push_back( n );
+	m_vertices.push_back( n );//加入点过程在创造函数中？！！
 	return n;
 }
 
 //
 // removes given node from the node list
 //
-void MeshEx::removeVertex( Vertex *vertex )
+
+void MeshEx::removeVertexEx( Vertex *vertex )
 {
 	std::vector<Triangle *> triangleRing_copy( vertex->triangleRing.begin(), vertex->triangleRing.end() );
 	// remove the triangles which contain v
-	for( std::vector<Triangle *>::iterator it=triangleRing_copy.begin(); it != triangleRing_copy.end(); ++it )
+	for( std::vector<Triangle *>::iterator it = triangleRing_copy.begin(); it != triangleRing_copy.end(); ++it )
 		// remove Triangle and dont remove isolated elements
-		removeTriangle( *it, false, true );
+		removeTriangle( *it, false, true );//移除三角形，并且对三角形上的边和顶点邻域信息做更改
 
-	// check
+	// check，顶点再无邻域三角形
 	if( !vertex->isDesolate() )
 		// strange
 		printf( "error: vertex still referenced although all triangles sharing the vertex had been removed\n" );
 		
-	m_vertices.erase( std::remove( m_vertices.begin(), m_vertices.end(), vertex ) );
+	m_vertices.erase( std::remove( m_vertices.begin(), m_vertices.end(), vertex ) );//将该顶点彻底移除
 
 	delete vertex;
 }
@@ -582,7 +582,7 @@ void MeshEx::removeTriangle( Triangle *element, bool removeVertices, bool remove
 			if( removeVertices )
 				for( size_t i=0; i<3; ++i )
 					if( element->v[i]->isDesolate() )
-						removeVertex( element->v[i] );
+						removeVertexEx( element->v[i] );
 
 			delete element;
 
