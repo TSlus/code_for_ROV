@@ -541,13 +541,15 @@ bool MeshEx::removeVertexAndReTriangulateNeighbourhood( MeshEx::Vertex *v )//ÊäÈ
 	// and we have to handle the polygon
 	if( boundaryPolygon->isTriangle() )
 	{
+
 		createTriangle(boundaryPolygon->vertices[0], boundaryPolygon->vertices[1], boundaryPolygon->vertices[2], edges);
+
 		polygons.clear();
 		delete boundaryPolygon;
 
 		//++g_iterations;
 		return true;
-
+		
 	}
 
 

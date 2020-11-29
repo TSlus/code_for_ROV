@@ -23,7 +23,7 @@ public:
 	typedef std::vector<std::pair<math::Vec3f, MeshEx::Triangle*> > ConstrainedVertexSet;
 	//RemoveOldVertices() { };//构造函数和解析函数需要在cpp文件中详细描述                                                                                         // constructor
 	~RemoveOldVertices() {}; // destructor
-	void removeFunc(MeshEx* _mesh); // performs the algorithm on the given mesh with a set of contrained vertices
+	void removeFunc(MeshEx* _mesh/*, std::vector<int> CSV_id*/); // performs the algorithm on the given mesh with a set of contrained vertices
 	//bool removeVertexIsPermited(MeshEx::Vertex* v); // 判断顶点是否可以被移除
 
 

@@ -1,6 +1,6 @@
 #include "RemoveOldVertices.h"
 
-void RemoveOldVertices::removeFunc(MeshEx* _mesh)
+void RemoveOldVertices::removeFunc(MeshEx* _mesh/*, std::vector<int> CSV_id*/)
 {
 	mesh_ROV = _mesh;
 
@@ -20,8 +20,15 @@ void RemoveOldVertices::removeFunc(MeshEx* _mesh)
 	// 11.26晚
 
 	std::vector<MeshEx::Vertex*> retainedVertices; // vertices which could not be removed
-	for (size_t i = 0; i < 2; ++i)
+	int j = 0;
+	for (size_t i = 0; i < 1941; ++i)
 	{
+		//if (i == CSV_id[j]-(int)1)
+		//{
+		//	j += 1;
+		//	retainedVertices.push_back(oldVertices[i]);
+		//	continue;
+		//}
 		bool removed = mesh_ROV->removeVertexAndReTriangulateNeighbourhood(oldVertices[i]);
 
 		// if vertex could not be removed
@@ -32,32 +39,32 @@ void RemoveOldVertices::removeFunc(MeshEx* _mesh)
 
 	//对于没能删除的点，尝试5次删除
 	//尝试5次的意义在哪？
-	{
-		int count = 0; // this variable counts the number of tries
+	//{
+	//	int count = 0; // this variable counts the number of tries
 
-		// as long as there are any retained vertices and
-		// we have not hit the maximum trial count yet:
-		while (!retainedVertices.empty() && (count < 5))
-		{
-			// get the first entry
-			std::vector<MeshEx::Vertex*>::iterator it = retainedVertices.begin();
+	//	// as long as there are any retained vertices and
+	//	// we have not hit the maximum trial count yet:
+	//	while (!retainedVertices.empty() && (count < 5))
+	//	{
+	//		// get the first entry
+	//		std::vector<MeshEx::Vertex*>::iterator it = retainedVertices.begin();
 
-			// as long as we have not reached the list of all retained vertices...
-			while (it != retainedVertices.end())
-			{
-				// try to remove the current vertex
-				if (mesh_ROV->removeVertexAndReTriangulateNeighbourhood(*it))
-					// if it was successfull, then remove the vertex
-					// from the list of retained vertices
-					retainedVertices.erase(it); // it now points to the next element within the vector
-				else
-					// vertex could not be removed -> go ahead
-					++it;
-			};
+	//		// as long as we have not reached the list of all retained vertices...
+	//		while (it != retainedVertices.end())
+	//		{
+	//			// try to remove the current vertex
+	//			if (mesh_ROV->removeVertexAndReTriangulateNeighbourhood(*it))
+	//				// if it was successfull, then remove the vertex
+	//				// from the list of retained vertices
+	//				retainedVertices.erase(it); // it now points to the next element within the vector
+	//			else
+	//				// vertex could not be removed -> go ahead
+	//				++it;
+	//		};
 
-			++count;
-		};
-	}
+	//		++count;
+	//	};
+	//}
 
 	printf("done (%i vertices retained from removal)\n", retainedVertices.size());
 

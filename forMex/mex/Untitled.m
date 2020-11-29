@@ -1,0 +1,2 @@
+% myMexVcTest
+mex myMexVcTest.cpp

@@ -36,6 +36,9 @@ namespace dk
 	//
 	Mesh::Mesh( const std::vector<math::Vec3f> &_vertices, const std::vector<int> &indicees )
 	{
+		tempindicees = indicees;//用于读取里面的数据。
+		tempvertices = _vertices;
+
 		for( std::vector<math::Vec3f>::const_iterator it=_vertices.begin(); it != _vertices.end(); ++it )
 		{
 			// create a vertex and

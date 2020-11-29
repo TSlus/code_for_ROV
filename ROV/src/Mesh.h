@@ -75,6 +75,8 @@ namespace dk
 		std::vector<Vertex *>                vertices;
 		std::vector<Triangle *>             triangles;
 
+		std::vector<math::Vec3f>            tempvertices;
+		std::vector<int>                    tempindicees;
 
 	};
 }

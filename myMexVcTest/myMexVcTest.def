@@ -1,0 +1,2 @@
+LIBRARY     myMexVcTest
+EXPORTS mexFunction

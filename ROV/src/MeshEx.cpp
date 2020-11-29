@@ -506,7 +506,7 @@ MeshEx::Triangle     *MeshEx::createTriangle( Vertex *v0, Vertex *v1, Vertex *v2
 	return t;
 }
 
-MeshEx::Triangle *MeshEx::createTriangle( MeshEx::Vertex *v0, MeshEx::Vertex *v1, MeshEx::Vertex *v2, std::vector<Edge *> edges )
+MeshEx::Triangle *MeshEx::createTriangle( MeshEx::Vertex *v0, MeshEx::Vertex *v1, MeshEx::Vertex *v2, std::vector<Edge *> &edges )
 {
 	Triangle *t = new Triangle();
 
