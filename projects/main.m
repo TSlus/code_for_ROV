@@ -5,7 +5,7 @@ name2 = 'bronze.mat';
 
 %% input
 % 1.mesh
-modelname = name1;
+modelname = name2;
 load(modelname);
 
 % 2.number of candidate points
@@ -22,3 +22,4 @@ method = 3; % 1,2,both = 1,2,3
 %% do Retiling and PPS
 detail_plot = 0;
 Retiling_and_PPS;
+

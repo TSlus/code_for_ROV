@@ -1,7 +1,8 @@
 function [nearP, nearPsp, normal, delete_fM, n_rem] = localNearP(i,vertices, ...
-    vertices_Mutual, faces_Mutual)
+    faces, vertices_Mutual, faces_Mutual)
 
 n_rem = 0;
+nearP = []; normal = [];
 % Vertex local information.
 vi = vertices(i, :);
 [r_i, ~] = find(faces_Mutual == i);
@@ -16,8 +17,13 @@ nearPsp = sparse(tri_1(:), tri_turn(:), [1:nf_sp, 1:nf_sp, 1:nf_sp]');
 try
     nearP = findNearP_sp(nearPsp, i);
 catch
-    figure(20)
+    figure(100)
     trimesh(faces_Mutual, vertices_Mutual(:,1), vertices_Mutual(:,2), vertices_Mutual(:,3));
+    axis equal; hold on
+    plot3(vertices(i,1),vertices(i,2),vertices(i,3),'r*');
+    
+    figure(101)
+    trimesh(faces, vertices(:,1), vertices(:,2), vertices(:,3));
     axis equal; hold on
     plot3(vertices(i,1),vertices(i,2),vertices(i,3),'r*');
     % warning('check valence 2.')

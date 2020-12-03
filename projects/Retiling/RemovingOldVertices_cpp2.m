@@ -17,7 +17,7 @@ for i = iA
         
     % local information.
     [nearP, nearPsp, normal, delete_fM, n_rem] = ...
-        localNearP(i,vertices,vertices_Mutual, faces_Mutual);
+        localNearP(i,vertices,faces, vertices_Mutual, faces_Mutual);
     if n_rem < 0; return; end    
     v_nearp = vertices_Mutual(nearP, :);
 

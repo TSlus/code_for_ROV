@@ -1,5 +1,6 @@
 function [faces_add2, re_flag, mcontinue] = addFace(xy, nearP, crirical_tri)
 
+faces_add2 = [];
 n_near = length(nearP);
 re_flag = 1; mcontinue = 0;
 lastwarn('');

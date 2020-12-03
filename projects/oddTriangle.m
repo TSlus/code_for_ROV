@@ -1,5 +1,6 @@
 % oddTriangle
 clear; clc
+addpath(genpath('Models'));
 load('bronze.mat')
 
 % oddpoint = [30.3201010000000,-26.3411010000000,-831.630981000000];

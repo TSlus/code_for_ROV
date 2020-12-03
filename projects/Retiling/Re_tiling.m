@@ -82,6 +82,16 @@ trimesh(faces_Mutual, vertices_Mutual(:,1), vertices_Mutual(:,2), vertices_Mutua
 axis equal; title('Mutual Tesselation');
 end
 
+% save dataBronze vertices_cand faces_Mutual CSP_idx nCand ubelongcd;
+if strcmp(modelname,'bronze.mat')
+mdata2 = load('dataBronze.mat');
+vertices_cand = mdata2.vertices_cand;
+faces_Mutual = mdata2.faces_Mutual;
+CSP_idx = mdata2.CSP_idx;
+nCand = mdata2.nCand;
+ubelongcd = mdata2.ubelongcd;
+end
+
 %% 4.RemovingOldVertices
 disp('Removing Old Vertices...')
 % method 1
@@ -91,6 +101,8 @@ if method == 1 || method == 3
     mymesh, vertices_cand(1:nCand, :), faces_Mutual, CSP_idx);
 mt1 = toc;
 disp(['移除顶点时，方法1用时：',num2str(mt1),'s'])
+if n_rem<0; return; end
+
 % plot 
 if detail_plot
 figure(nfig); nfig = nfig + 1;
@@ -100,7 +112,7 @@ end
 end
 
 % method 2
-if (method == 2 || method == 3) & modelname == 'model.mat'  
+if (method == 2 || method == 3)
 tic
 [vertices_ReT2, faces_ReT2,~] = removing_old_vertices2(...
     mymesh, vertices_cand(1:nCand, :), faces_Mutual, CSP_idx);
