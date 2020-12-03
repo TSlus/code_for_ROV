@@ -21,7 +21,7 @@ end
 %% do Re_Tiling
 disp('======== Do Re-Tiling ========')
 [vertices_ReT, faces_ReT, n_rem, ubelong, nfig, xdelta] = ...
-    Re_tiling(vertices, faces, nCand, k_level, nfig, detail_plot);
+    Re_tiling(vertices, faces, nCand, k_level, nfig, detail_plot,method,modelname);
 % note：vertices_ReT中前n_rem个点是原始顶点
 
 %%
