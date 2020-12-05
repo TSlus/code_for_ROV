@@ -11,5 +11,6 @@ L = mean(de);
 [vertices, faces] = RemoveValence2(vertices, faces);
 
 % findNearPs_remesh(faces);
+
 end
 

@@ -46,7 +46,7 @@ for n_move = 1:30
     nameF_cand(1:nCand) = nameF_cand2;
 end
 
-% force_test; % test 1, to check the force perpendicular to the face normal
+% force_test; % my test 1, to check the force perpendicular to the face normal
 aplane = sum(forces(1:nCand, :) .* norm_face(nameF_cand3(1:nCand), :),2);
 xdelta = max(abs(aplane));
 
@@ -73,7 +73,7 @@ vertices_Mutual = [vertices; vertices_cand(1:nCand,:)];
 % save  faces_Mutual.txt  faces_Mutual -ascii 
 % save  CSP_idx.txt  CSP_idx -ascii 
 
-mesh_test; % test 2, check the candidate points in triangles or not.
+mesh_test; % my test 2, check the candidate points in triangles or not.
 
 % plot, MutualTesselation
 if detail_plot
@@ -82,15 +82,17 @@ trimesh(faces_Mutual, vertices_Mutual(:,1), vertices_Mutual(:,2), vertices_Mutua
 axis equal; title('Mutual Tesselation');
 end
 
+%% save data
 % save dataBronze vertices_cand faces_Mutual CSP_idx nCand ubelongcd;
-if strcmp(modelname,'bronze.mat')
-mdata2 = load('dataBronze.mat');
-vertices_cand = mdata2.vertices_cand;
-faces_Mutual = mdata2.faces_Mutual;
-CSP_idx = mdata2.CSP_idx;
-nCand = mdata2.nCand;
-ubelongcd = mdata2.ubelongcd;
-end
+% if strcmp(modelname,'bronze.mat')
+% mdata2 = load('dataBronze.mat');
+% vertices_cand = mdata2.vertices_cand;
+% faces_Mutual = mdata2.faces_Mutual;
+% CSP_idx = mdata2.CSP_idx;
+% nCand = mdata2.nCand;
+% ubelongcd = mdata2.ubelongcd;
+% 232
+% end
 
 %% 4.RemovingOldVertices
 disp('Removing Old Vertices...')

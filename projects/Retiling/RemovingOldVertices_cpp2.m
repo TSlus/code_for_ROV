@@ -10,6 +10,7 @@ idx_change = 1:np;
 
 % faces_old = faces_faces_Mutual;
 iA = 1:np; iA(CSP_idx) = 0; iA = iA(iA>0);
+test_odd = 0;
 for i = iA   
 % for i = 1:np % be replaced.
     % if ismember(i, CSP_idx); continue; end % be replaced.
@@ -18,7 +19,9 @@ for i = iA
     % local information.
     [nearP, nearPsp, normal, delete_fM, n_rem] = ...
         localNearP(i,vertices,faces, vertices_Mutual, faces_Mutual);
-    if n_rem < 0; return; end    
+    if n_rem < 0
+        return; 
+    end    
     v_nearp = vertices_Mutual(nearP, :);
 
     % test1: check the project of 2D near p of i
@@ -26,11 +29,13 @@ for i = iA
     if ~success; continue; end 
     
     % test2: check critical edges
-    [re_flag, crirical_tri]=checkCriticalEdge(nearP,faces_Mutual, nearPsp, xy);
+    [re_flag, crirical_tri, crirical_tri3]=checkCriticalEdge(...
+        nearP,faces_Mutual, nearPsp, xy, i);
     if ~re_flag; continue; end
     
     % add new faces.
-    [faces_add2, re_flag, mcontinue] = addFace(xy, nearP, crirical_tri);
+    [faces_add2, re_flag, mcontinue, test_odd] = addFace(...
+        xy, nearP, crirical_tri,crirical_tri3, test_odd);
     if (~re_flag || mcontinue); continue; end
     
     faces_add1 = faces_Mutual(delete_fM == 0, :);
@@ -39,6 +44,7 @@ for i = iA
     idx_change(i+1:np) = idx_change(i+1:np) - 1;% adjust indexes
     remove_idx(i) = 1;% removed vertex
 end
+
 % adjust points
 remain_p = find(~remove_idx);
 vertices_Mutual = [vertices(remain_p, :); vertices_cand];

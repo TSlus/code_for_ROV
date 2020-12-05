@@ -14,19 +14,25 @@ for P = 1:np
 end
 
 P2 = find(vertex_valence == 2);
+P3 = find(vertex_valence == 3);
 
 delet_f = zeros(nf, 1);
 adj_idx = 1:np;
-for i = P2
-    [ri, ~] = find(faces == i);
+PP = [P2,P3; P2,-P3];
+addF  = zeros(np, 3); t_3 = 1;
+for i = 1:size(PP,2)
+    [ri, ~] = find(faces == PP(1,i));
+    if PP(2,i) < 0
+        addF(t_3,:) = findNearP(faces(ri,:), PP(1,i));t_3 = t_3 + 1;
+    end
     delet_f(ri) = 1;
-    adj_idx((i+1):np) = adj_idx((i+1):np) - 1;
+    adj_idx((PP(1,i)+1):np) = adj_idx((PP(1,i)+1):np) - 1;
 end
-faces_new = faces(delet_f == 0,:);
+faces_new = [faces(delet_f == 0,:); addF(1:(t_3-1),:)];
 
 faces = adj_idx(faces_new);
-vertices = removerows(vertices, P2);
-vertex_valence = removerows(vertex_valence', P2);
+vertices = removerows(vertices, PP(1,:));
+vertex_valence = removerows(vertex_valence', PP(1,:));
 
 min_valen = min(vertex_valence);
 disp(['The minimum degree:',num2str(min_valen)]);

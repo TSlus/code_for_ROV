@@ -18,12 +18,14 @@ trimesh(faces, vertices(:,1),vertices(:,2),vertices(:,3));axis equal
 title('the mesh after remesh')
 end
 
+%% save data
 % save dataBronze2 vertices faces nCand k_level;
-if strcmp(modelname,'bronze.mat')
-    mdata = load('dataBronze2.mat');
-    vertices = mdata.vertices; faces = mdata.faces; 
-    nCand = mdata.nCand; k_level = mdata.k_level;
-end
+% if strcmp(modelname,'bronze.mat')
+%     mdata = load('dataBronze2.mat');
+%     vertices = mdata.vertices; faces = mdata.faces; 
+%     nCand = mdata.nCand; k_level = mdata.k_level;
+% end
+
 %% do Re_Tiling
 disp('======== Do Re-Tiling ========')
 [vertices_ReT, faces_ReT, n_rem, ubelong, nfig, xdelta] = ...
@@ -32,9 +34,10 @@ disp('======== Do Re-Tiling ========')
 
 %%
 if n_rem < 0
-    warning('由于算法的不稳定性（详细解释见 README.md文档），请再试一次。');
+    warning('半边重复，请再试一次。');
     return;
 end
+
 %% do PPS
 % 1.loopSurface
 disp('======== Do PPS ========')
@@ -73,7 +76,6 @@ disp('Remeshing...')
 [verticesr, facesr] = DoRemesh(vertices_final, faces_final);
 
 % plot
-
 figure(nfig); nfig = nfig + 1;
 trimesh(facesr, verticesr(:,1), verticesr(:,2), verticesr(:,3));axis equal;
 title('Retiling & PPS');

@@ -7,6 +7,7 @@ name2 = 'bronze.mat';
 % 1.mesh
 modelname = name2;
 load(modelname);
+modelname = 0;% when you want to use the saved data, need it.
 
 % 2.number of candidate points
 % nCand = ceil(size(faces, 1)/2);

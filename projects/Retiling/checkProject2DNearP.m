@@ -2,7 +2,7 @@ function [success,xy] = checkProject2DNearP(v_nearp, vi, normal)
 n_near = size(v_nearp,1);
 normal0 = normal;
 n_test = 0; success = 0;
-while n_test < 15
+while n_test < 13
     switch n_test
         case 0
         case 1; normal = [.8507, .4472, .2764];
@@ -17,8 +17,8 @@ while n_test < 15
         case 10; normal = [.0, -.4472, .8944];
         case 11; normal = [.0, .4472, -.8944];
         case 12; normal = [0, 1, 0];
-        case 13; normal = [1, 0,0];
-        case 14; normal = [0, 0, 1];
+        %case 13; normal = [1, 0,0];
+        %case 14; normal = [0, 0, 1];
     end
     if sum(normal.*normal0) < 0; normal = -normal; end
     

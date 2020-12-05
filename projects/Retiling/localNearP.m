@@ -27,7 +27,9 @@ catch
     axis equal; hold on
     plot3(vertices(i,1),vertices(i,2),vertices(i,3),'r*');
     % warning('check valence 2.')
+    % 查看奇异点半边情况
     n_rem = -1;
+    % save odddata faces_Mutual vertices_Mutual
     return;
 end
 
@@ -39,4 +41,5 @@ normals_pi = cross(v_nearp - vi, v_nearp([2:n_near, 1], :) - vi, 2);
 normals_pi_norm = sqrt(sum(normals_pi.^2, 2));
 normal = sum(normals_pi ./ normals_pi_norm, 1);
 normal = normal./norm(normal);
+
 end
