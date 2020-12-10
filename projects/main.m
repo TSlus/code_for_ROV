@@ -18,7 +18,7 @@ nCand = ceil(size(faces, 1)*2/5);
 k_level = ceil(nCand*2/5); % quarter of nCand
 
 % 4.methods for remove old vertices
-method = 3; % 1,2,both = 1,2,3
+method = 3; % 1,2,3，both = 1,2,3，4
 
 %% do Retiling and PPS
 detail_plot = 0;

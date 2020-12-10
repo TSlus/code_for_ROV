@@ -97,14 +97,13 @@ end
 %% 4.RemovingOldVertices
 disp('Removing Old Vertices...')
 % method 1
-if method == 1 || method == 3
+if method == 1 || method == 4
  tic
 [vertices_ReT, faces_ReT, n_rem] = RemovingOldVertices_cpp2(...
     mymesh, vertices_cand(1:nCand, :), faces_Mutual, CSP_idx);
 mt1 = toc;
 disp(['移除顶点时，方法1用时：',num2str(mt1),'s'])
 if n_rem<0; return; end
-
 % plot 
 if detail_plot
 figure(nfig); nfig = nfig + 1;
@@ -114,19 +113,42 @@ end
 end
 
 % method 2
-if (method == 2 || method == 3)
+if (method == 2 || method == 4)
 tic
-[vertices_ReT2, faces_ReT2,~] = removing_old_vertices2(...
+[vertices_ReT, faces_ReT, n_rem] = removing_old_vertices2(...
     mymesh, vertices_cand(1:nCand, :), faces_Mutual, CSP_idx);
 mt2 = toc;
 disp(['移除顶点时，方法2用时：',num2str(mt2),'s'])
 % plot 
 if detail_plot
 figure(nfig); nfig = nfig + 1;
-trimesh(faces_ReT2, vertices_ReT2(:,1), vertices_ReT2(:,2), vertices_ReT2(:,3));axis equal;
+trimesh(faces_ReT, vertices_ReT(:,1), vertices_ReT(:,2), vertices_ReT(:,3));axis equal;
 title('mesh after kicking old points by method2');
 end
-
 end
+
+% method 3
+if (method == 3 || method == 4)
+tic
+% try
+[vertices_ReT, faces_ReT, n_rem] = RemoveOldVertices_new(...
+    mymesh, vertices_cand(1:nCand, :), faces_Mutual, CSP_idx);
+% catch
+%     save dataBronze_new2 vertices_cand faces_Mutual CSP_idx nCand faces vertices;
+%     disp('出错，请再试一次。')
+%     
+%     return;
+% end
+
+mt3 = toc;
+disp(['移除顶点时，方法3用时：',num2str(mt3),'s'])
+% plot 
+if detail_plot
+figure(nfig); nfig = nfig + 1;
+trimesh(faces_ReT, vertices_ReT(:,1), vertices_ReT(:,2), vertices_ReT(:,3));axis equal;
+title('mesh after kicking old points by method3');
+end
+end
+
 
 end

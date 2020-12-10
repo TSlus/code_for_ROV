@@ -27,22 +27,35 @@ for i = iA
     near_p = findNearP(faces_i, i);
     num_nearp = length(near_p);
     
-    % 邻域点投影到二维平面
-    t = (1:num_nearp) * 2 * pi / num_nearp; t = fliplr(t);
+%     % 邻域点投影到二维平面
+%     t = (1:num_nearp) * 2 * pi / num_nearp; t = fliplr(t);
+%     x = cos(t); y = sin(t);
+%     xy = [x; y]; xy = xy';
+%     
+%     flip_near = fliplr(near_p); % 计算OneRing，顺时针给出
+%     di_vec = vertices_Mutual(flip_near,:) - vertices_Mutual(i,:);
+%     di = sum(abs(di_vec).^2, 2).^(1/2);
+%     
+%     % 多边形三角化
+%     xy = xy .* di;
+%     polyin = polyshape(xy(:,1), xy(:,2));
+%     T = triangulation(polyin);
+% 
+%     % 加入的面
+%     faces_add2 = flip_near(T.ConnectivityList);
+
+    % 
+    t = (1:num_nearp) * 2 * pi / num_nearp;
     x = cos(t); y = sin(t);
     xy = [x; y]; xy = xy';
-    
-    flip_near = fliplr(near_p); % 计算OneRing，顺时针给出
-    di_vec = vertices_Mutual(flip_near,:) - vertices_Mutual(i,:);
-    di = sum(abs(di_vec).^2, 2).^(1/2);
-    
-    % 多边形三角化
+    di_vec = vertices_Mutual(near_p,:) - vertices_Mutual(i,:);
+    di = sqrt(sum(abs(di_vec).^2, 2));
     xy = xy .* di;
     polyin = polyshape(xy(:,1), xy(:,2));
     T = triangulation(polyin);
-    
-    % 加入的面
-    faces_add2 = flip_near(T.ConnectivityList);
+    adj_face = near_p([1, num_nearp:-1:2]);
+    faces_add2 = adj_face(T.ConnectivityList);
+
     % 新增的面
     faces_add1 = faces_Mutual(delete_fM == 0, :);
     faces_Mutual = [faces_add1; faces_add2];
@@ -66,6 +79,12 @@ for i = iA
         continue;
     end
     nhe_old = nhe_old - 3*num_nearp + nhe;
+
+%     if max(max(hedge)) > 1
+%         faces_Mutual = faces_Mutual_old;
+%         hedge = hedge_old;
+%         continue;
+%     end
     
     remove_idx(i) = 1;
     sparse_idx(ts:(ts+np-i-1),1) = i;

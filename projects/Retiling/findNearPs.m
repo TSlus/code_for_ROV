@@ -14,7 +14,7 @@ half_face = sparse(X, Y, f_name);
 np = max(max(faces));
 oneRingP{np} = [];
 vertex_valence(np) = 0;
-for P = 1:np  
+for P = 1:np
     %初始化，第一个点
     neighbor_P = find(half_face(:,P));%返回非零元素位置，点P的邻域点（没有顺序）
     vertex_valence(P) = length(neighbor_P);
